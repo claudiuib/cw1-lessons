@@ -1,125 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
-    <!-- Navigation bar -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <title>Document</title>
-    <div class="navbar navbar-dark bg-primary">
-        <div class="navbar­header">
-            <h1>
-                <router­link :to="{name: 'iMain'}">Lessons
-                </router­link>
-            </h1>
-        </div>
-        <div class="nav navbar­nav navbar ­right cart">
-            <a href="#" class="btn btn-info btn-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                </svg> Shopping Cart
-            </a>
-        </div>
-    </div>
-</head>
 
-<body>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
+  <!-- Navigation bar -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<div id="app">
+ 
+  <header>
+    <div v-if="showProduct">
+    
+    <title>Lessons</title>
+    <div class="navbar navbar-dark bg-primary">
+      <div class="navbar­header">
+        <h1>Lessons</h1>
+      </div>
+      <div class="nav navbar­nav navbar ­right cart">
+        <!-- button shopping cart -->
+
+        <button class="btn  btn-info" v-on:click="showCheckout">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
+            viewBox="0 0 16 16">
+            <path
+              d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+          </svg> Shopping Cart
+        </button>
+
+
+      </div>
+    </div>
+  </header>
+
+  <body>
 
     <!-- Filter option -->
+    <!-- show the main page -->
+    <div v-if="showProduct">
     <div class="sort container mt-5">
-        <div class="row">
-            <div class="col-3">
+      <div class="row">
 
-                <div class="form-check  ">
-                    <p>Sort By</p>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Subject
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Location
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Price
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Availability
-                    </label>
-                </div>
-                <div class="form-check mt-5">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Ascending
-                    </label>
-                </div>
-                <div class="form-check ">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Descending
-                    </label>
-                </div>
-            </div>
-            <div class="col-md">
-                <div id="app">
-                    <div class="row ">
-                    <div class="card my-2 mx-2" style="width: 18rem;" v-for="product in products" v-bind:title=product.title>
-                      
-                            <img class="card-img-top"  alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">{{product.title}}</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-3">
 
-                </div>
-            </div>
+          <div class="form-check  ">
+            <p>Sort By</p>
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Subject
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Location
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Price
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" checked>
+            <label class="form-check-label" for="flexCheckDefault">
+              Availability
+            </label>
+          </div>
 
+
+          <div class="form-check3 mt-5">
+            <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Ascending
+            </label>
+          </div>
+          <div class="form-check3 ">
+            <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Descending
+            </label>
+          </div>
         </div>
-    </div>
+        <!-- card body -->
 
-    <!-- Vue js properties -->
+        <div class="col-md">
+          <div>
+            <div class="row ">
+              <div class="card my-2 mx-2" style="width: 18rem;" v-for="product in products">
+
+                <img class="card-img-top" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{product.title}}</h5>
+                  <h2> {{product.spaces - cartCount(product.id)}} </h2>
+                  <p class="card-text">Some quick example text to build on the card title and make up
+                    the
+                    bulk of the card's content.</p>
+                  <!-- <div class="text-right">
+                                    <button type="button" class="btn btn-primary" v-on:click="addToCart(product)">Add to
+                                        Card</button>
+
+                                </div> -->
+
+                  <button class=" btn btn-primary btn-lg" v-on:click="addToCart(product) "
+                    v-if="canAddToCart(product)">Add to cart</button>
+                  <button disabled="true" class=" btn btn-primary btn-lg" v-else>Add to cart</button>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div v-for="items in cart">
+        <h5>{{items}}</h5>
+      </div>
+
+    </div>
+  </div>
+  <!-- Checkout page -->
+  <div v-else>
+    <title>Lessons</title>
+    <div class="navbar navbar-dark bg-primary">
+      <div class="navbar­header">
+        <h1>Lessons</h1>
+      </div>
+      <div class="nav navbar­nav navbar ­right cart">
+        <!-- button shopping cart -->
+
+        <button class="btn  btn-info" v-on:click="showCheckout">
+          Home
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+<!-- Vue js properties -->
     <script type="text/javascript ">
+     var APP_LOG_LIFECYCLE_EVENTS = true;
         // Vue Object contains data
       
-        var app = new Vue({
+   var app = new Vue({
+   
+   
     el: '#app',
- 
-    data() {
-        return{
-          products:[]
-        }
-    },
-    methods: {
+    data:{
+      showProduct: true,
+      
+        products:{},
 
+        
+        cart:[],
+       stock :[]
     },
-    created() {
+   
+    methods: {
+     
+        addToCart(aProduct) {
+          this.cart.push(aProduct);
+          this.stock.push(aProduct.id);
+          this.btnDisabled = false;
+          
+        },
+        
+        
+
+        canAddToCart(aProduct) {
+       
+          return aProduct.spaces > this.cartCount(aProduct.id);
+        },
+        cartCount(id) {
+          let count = 0;
+          for (var i = 0; i < this.cart.length; i++) {
+            if (this.stock[i] === id) {
+              count++;
+            }
+          }
+          return count;
+        },
+        showCheckout() {
+          this.showProduct = this.showProduct ? false : true;
+        },
+        showButton(){
+           return this.cart.length !== 0;
+        }
+       
+      },
+      
+        
+          
+       
+    computed: {
+        cartItemCount() {
+          return this.cart.length || '';
+          
+          
+        },
+  
+    },
+    beforeCreate: function () {	//#B
+        if (APP_LOG_LIFECYCLE_EVENTS) {	//#B
+          console.log("beforeCreate");	//#B
+        }	//#B
+      },	//#B
+    
+    created: function() {
         axios.get('./lesson.json') 
         .then((response) =>{
             this.products=response.data.lesson;
             console.log(this.products);
             });
 
-        }
-});
+        },
+        beforeMount: function () {	//#D
+        if (APP_LOG_LIFECYCLE_EVENTS) {	//#D
+          console.log(" beforeMount");	//#D
+        }	//#D
+      },	//#D
+      mounted: function () {	//#E
+        if (APP_LOG_LIFECYCLE_EVENTS) {	//#E
+          console.log(" mounted");
+           	//#E
+        } 	//#E
+      },	//#E
+      beforeUpdate: function () { 	//#F
+        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#F
+          console.log("beforeUpdate"); 	//#F
+        } 	//#F
+      },	//#F
+      updated: function () { 	//#G
+        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#G
+          console.log("updated"); 	//#G
+        } 	//#G
+      },	//#G
+      beforeDestroyed: function () { 	//#H
+        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#H
+          console.log("beforeDestroyed "); 	//#H
+        } 	//#H
+      },	//#H
+      destroyed: function () { 	//#I
+        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#I
+          console.log("destroyed"); 	//#I
+        } 	//#I
+      }	//#I
+   
+    });
       
     </script>
 
