@@ -172,7 +172,7 @@
         <div class="container">
           <div class="row">
             <div class="col order-last">
-              <button :disabled="!formIsValid"class="btn btn-primary">Submit</button>
+              <button :disabled="!formIsValid"class="btn btn-primary" v-on:click="submitForm">Submit</button>
             </div>
             <div class="col">
               Phone:
@@ -264,6 +264,9 @@
         showCheckout() {
           this.showProduct = this.showProduct ? false : true;
         },
+        submitForm(){
+           return alert('Order submited!')
+        }
       
        
       },
