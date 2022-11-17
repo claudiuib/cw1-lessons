@@ -150,7 +150,7 @@
         <div class="container">
 
           <div class="row">
-            <div class="card  my-6 mx-2 " style="width: 18rem;" v-for="(order,id) in cart">
+            <div class="card  my-6 mx-2 " style="width: 18rem;" v-for="(order,index) in cart">
               <img class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">{{order.title}}</h5>
@@ -158,12 +158,12 @@
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                   card's
                   content.</p>
-                <button class="btn btn-primary" v-on:click="removeCart(id)">Remove</button>
+                <button class="btn btn-primary" v-on:click="removeCart(index)">Remove</button>
               </div>
             </div>
           </div>
         </div>
-        <!-- Checkout -->
+        <!-- Checkout form -->
         <div class="d-flex justify-content-center mt-5 mb-5">
           <h5>
             Checkout
@@ -172,15 +172,18 @@
         <div class="container">
           <div class="row">
             <div class="col order-last">
-              <button class="btn btn-primary">Submit</button>
+              <button :disabled="!formIsValid"class="btn btn-primary">Submit</button>
             </div>
             <div class="col">
               Phone:
-              <input v-model="message" />
+              <input v-model="phone " id="phone" />
+              <p v-if="!phoneIsValid" class="error message">Only numbers allowed</p>
+
             </div>
             <div class="col order-first">
               Name :
-              <input v-model="message" />
+              <input v-model="name " id="name" />
+              <p v-if="!nameIsValid" class="error message">Only letters allowed</p>
 
             </div>
           </div>
@@ -208,31 +211,36 @@
    
     el: '#app',
     data:{
+      
+                      
+      name: null,
+      phone :null,
+    
+
       showProduct: true,
       
-        products:{},
-
         
-        cart:[],
-       stock :[]
+      products:{},
+      cart:[],
+      stock :[]
     },
    
     methods: {
      
         addToCart(aProduct) {
-          this.cart.push(aProduct);
-          this.stock.push(aProduct.id);
-        
-          this.saveCart();
+            this.stock.push(aProduct.id);
+            this.cart.push(aProduct);
+            this.saveCart();
           
         },
         saveCart(){
           const parsed =JSON.stringify(this.cart);
           localStorage.setItem('cart',parsed);
         },
-        removeCart(x){
-          this.cart.splice(x,1);
+        removeCart(index){
+          this.cart.splice(this.cart.indexOf(index),1);
           this.saveCart();
+          
          },
        
 
@@ -269,6 +277,17 @@
           
           
         },
+        //checkout validation functions
+        nameIsValid() {
+                    return /[a-zA-Z]/.test(this.name);
+                },
+        phoneIsValid() {
+                    return /[0-9]/.test(this.phone)
+                },
+        formIsValid() {
+                    return  this.nameIsValid && this.phoneIsValid
+                },
+
   
     },
     mounted(){
@@ -280,11 +299,7 @@
       }
     }
     },
-    beforeCreate: function () {	//#B
-        if (APP_LOG_LIFECYCLE_EVENTS) {	//#B
-          console.log("beforeCreate");	//#B
-        }	//#B
-      },	//#B
+   
     
     created: function() {
         axios.get('./lesson.json') 
@@ -292,40 +307,9 @@
             this.products=response.data.lesson;
             console.log(this.products);
             });
-
         },
-        beforeMount: function () {	//#D
-        if (APP_LOG_LIFECYCLE_EVENTS) {	//#D
-          console.log(" beforeMount");	//#D
-        }	//#D
-      },	//#D
-      mounted: function () {	//#E
-        if (APP_LOG_LIFECYCLE_EVENTS) {	//#E
-          console.log(" mounted");
-           	//#E
-        } 	//#E
-      },	//#E
-      beforeUpdate: function () { 	//#F
-        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#F
-          console.log("beforeUpdate"); 	//#F
-        } 	//#F
-      },	//#F
-      updated: function () { 	//#G
-        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#G
-          console.log("updated"); 	//#G
-        } 	//#G
-      },	//#G
-      beforeDestroyed: function () { 	//#H
-        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#H
-          console.log("beforeDestroyed "); 	//#H
-        } 	//#H
-      },	//#H
-      destroyed: function () { 	//#I
-        if (APP_LOG_LIFECYCLE_EVENTS) { 	//#I
-          console.log("destroyed"); 	//#I
-        } 	//#I
-      }	//#I
-   
+
+       
     });
       
     </script>
