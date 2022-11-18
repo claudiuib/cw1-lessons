@@ -15,36 +15,36 @@
 </head>
 <div id="app">
 
-  <header>
-    <div v-if="showProduct">
 
+  <div v-if="showLessons">
+    <header>
       <title>Lessons</title>
       <div class="navbar navbar-dark bg-primary">
         <div class="navbar­header">
           <h1>Lessons</h1>
         </div>
         <div class="nav navbar­nav navbar ­right cart">
-      
+
           <!-- button shopping cart -->
 
-        <button :disabled="this.cart.length > 0 ? false : true" class="btn  btn-info mx-4" v-on:click="showCheckout" >
+          <button :disabled="this.cart.length > 0 ? false : true" class="btn  btn-info mx-4" v-on:click="showCheckout">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
               viewBox="0 0 16 16">
               <path
                 d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
             </svg> Shopping Cart
-         </button>
+          </button>
 
 
         </div>
       </div>
-  </header>
+    </header>
 
-  <body>
+    <body>
 
-    <!-- Filter option -->
-    <!-- show the main page -->
-    <div v-if="showProduct">
+      <!-- Filter option -->
+      <!-- show the main page -->
+
       <div class="sort container mt-5">
         <div class="row">
 
@@ -95,23 +95,23 @@
           <div class="col-md">
             <div>
               <div class="row ">
-                <div class="card my-2 mx-2" style="width: 18rem;" v-for="product in products">
+                <div class="card my-2 mx-2" style="width: 18rem;" v-for="lesson in lessons">
                   <div class="row">
                     <div class="col">
                       <div class="card-body">
-                        <p class="card-title">Title:{{product.title}}</p>
-                        <h5> Places:{{product.spaces - cartCount(product.id)}} </h5>
-                        <p class="card-title">Location:{{product.location}}</p>
-                        <p class="card-text">Price: {{product.price}}</p>
+                        <p class="card-title">Title:{{lesson.title}}</p>
+                        <h5> Places:{{lesson.spaces - cartCount(lesson.id)}} </h5>
+                        <p class="card-title">Location:{{lesson.location}}</p>
+                        <p class="card-text">Price: {{lesson.price}}</p>
                       </div>
                     </div>
                     <div class="col">
-                      <img class="img-fluid img-thumbnail" v-bind:src="product.image">
+                      <img class="img-fluid img-thumbnail" v-bind:src="lesson.image">
                     </div>
                     <div class="row">
                       <div class="col text-center mt-2 mb-2">
-                        <button class=" btn btn-primary btn-lg" v-on:click="addToCart(product) "
-                          v-if="canAddToCart(product)">Add to cart</button>
+                        <button class=" btn btn-primary btn-lg" v-on:click="addToCart(lesson) "
+                          v-if="canAddToCart(lesson)">Add to cart</button>
                         <button disabled="true" class=" btn btn-primary btn-lg" v-else>Add to cart</button>
                       </div>
                     </div>
@@ -130,84 +130,85 @@
 
 
       </div>
+    </body>
+  </div>
+  <!-- Checkout page -->
+  <div v-else>
+    <title>Lessons</title>
+    <div class="navbar navbar-dark bg-primary">
+      <div class="navbar­header">
+        <h1>Shopping Cart</h1>
+      </div>
+      <div class="nav navbar­nav navbar ­right cart">
+        <!-- button shopping cart -->
+
+        <button class="btn  btn-info  mx-4" v-on:click="showCheckout">
+          Home
+        </button>
+
+
+      </div>
     </div>
-    <!-- Checkout page -->
-    <div v-else>
-      <title>Lessons</title>
-      <div class="navbar navbar-dark bg-primary">
-        <div class="navbar­header">
-          <h1>Shopping Cart</h1>
-        </div>
-        <div class="nav navbar­nav navbar ­right cart">
-          <!-- button shopping cart -->
-
-          <button class="btn  btn-info  mx-4" v-on:click="showCheckout">
-            Home
-          </button>
 
 
+
+    <body>
+
+      <!--  bootstrap card body  -->
+      <div class="container">
+
+        <div class="row">
+          <div class="card  my-2 mx-2 mt-5 mb-5 " style="width: 18rem;" v-for="(order,index) in cart">
+            <div class="row">
+              <div class="col">
+                <div class="card-body">
+                  <p class="card-title">Title:{{order.title}}</p>
+                  <p class="card-title">Location:{{order.location}}</p>
+                  <p class="card-text">Price: {{order.price}}</p>
+                </div>
+              </div>
+              <div class="col">
+                <img class="img-fluid img-thumbnail" v-bind:src="order.image">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center mt-2 mb-2">
+                <button class="btn btn-primary" v-on:click="removeCart(index)">Remove</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Checkout form -->
+      <div class="d-flex justify-content-center mt-5 mb-5">
+        <h5>
+          Checkout
+        </h5>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col order-last">
+            <button :disabled="!formIsValid" class="btn btn-primary" v-on:click="submitForm">Checkout</button>
+          </div>
+          <div class="col">
+            Phone:
+            <input v-model="phone " id="phone" />
+            <p v-if="!phoneIsValid" class="error message">Only numbers allowed</p>
 
+          </div>
+          <div class="col order-first">
+            Name :
+            <input v-model="name " id="name" />
+            <p v-if="!nameIsValid" class="error message">Only letters allowed</p>
 
-      <body>
-
-        <!--  bootstrap card body  -->
-        <div class="container">
-
-          <div class="row">
-            <div class="card  my-2 mx-2 mt-5 mb-5 " style="width: 18rem;" v-for="(order,index) in cart">
-              <div class="row">
-                <div class="col">
-                  <div class="card-body">
-                    <p class="card-title">Title:{{order.title}}</p>
-                    <p class="card-title">Location:{{order.location}}</p>
-                    <p class="card-text">Price: {{order.price}}</p>
-                  </div>
-                </div>
-                <div class="col">
-                  <img class="img-fluid img-thumbnail" v-bind:src="order.image">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col text-center mt-2 mb-2">
-                  <button class="btn btn-primary" v-on:click="removeCart(index)">Remove</button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-
-        <!-- Checkout form -->
-        <div class="d-flex justify-content-center mt-5 mb-5">
-          <h5>
-            Checkout
-          </h5>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col order-last">
-              <button :disabled="!formIsValid" class="btn btn-primary" v-on:click="submitForm">Checkout</button>
-            </div>
-            <div class="col">
-              Phone:
-              <input v-model="phone " id="phone" />
-              <p v-if="!phoneIsValid" class="error message">Only numbers allowed</p>
-
-            </div>
-            <div class="col order-first">
-              Name :
-              <input v-model="name " id="name" />
-              <p v-if="!nameIsValid" class="error message">Only letters allowed</p>
-
-            </div>
-          </div>
-        </div>
-    </div>
+      </div>
+  </div>
 
   </body>
-</div>
+
 
 
 
@@ -235,19 +236,19 @@
       phone :null,
     
 
-      showProduct: true,
+      showLessons: true,
       
         
-      products:{},
+      lessons:{},
       cart:[],
       stock :[]
     },
    
     methods: {
      
-        addToCart(aProduct) {
-            this.stock.push(aProduct.id);
-            this.cart.push(aProduct);
+        addToCart(aLesson) {
+            this.stock.push(aLesson.id);
+            this.cart.push(aLesson);
             this.saveCart();
           
         },
@@ -262,9 +263,9 @@
          },
        
 
-        canAddToCart(aProduct) {
+        canAddToCart(aLesson) {
        
-          return aProduct.spaces > this.cartCount(aProduct.id);
+          return aLesson.spaces > this.cartCount(aLesson.id);
         },
 
 
@@ -280,7 +281,7 @@
 
       
         showCheckout() {
-          this.showProduct = this.showProduct ? false : true;
+          this.showLessons = this.showLessons ? false : true;
         },
         submitForm(){
            return alert('Order submited!')
@@ -325,8 +326,8 @@
     created: function() {
         axios.get('./lesson.json') 
         .then((response) =>{
-            this.products=response.data.lesson;
-            console.log(this.products);
+            this.lessons=response.data.lesson;
+            console.log(this.lessons);
             });
         },
 
