@@ -3,7 +3,7 @@
         {
             "id": 1001,
             "title": "Math",
-            "price": "£10",
+            "price": "10",
             "location":"York",
             "image" :"assets/images/math.png",
             "spaces" :10
@@ -12,7 +12,7 @@
         {
             "id": 1002,
             "title": "English",
-            "price": "£10",
+            "price": "10",
             "location":"Bristol",
             "image" :"assets/images/english.png",
             "spaces" :7
@@ -21,7 +21,7 @@
         {
             "id": 1003,
             "title": "French",
-            "price": "£13",
+            "price": "11",
             "location":"Leeds",
             "image" :"assets/images/french.png",
             "spaces" :12
@@ -31,7 +31,7 @@
             "id": 1004,
             "title": "Portuguese",
             "location":"Manchester",
-            "price": "£13",
+            "price": "9",
             "image" :"assets/images/portuguese.png",
             "spaces" :10
             
@@ -40,7 +40,7 @@
         {
             "id": 1005,
             "title": "Guitar",
-            "price": "£13",
+            "price": "21",
             "location":"London",
             "image" :"assets/images/guitar.png",
             "spaces" :9
@@ -50,7 +50,7 @@
         {
             "id": 1006,
             "title": "Italian",
-            "price": "£13",
+            "price": "17",
              "location":"Derby",
             "image" :"assets/images/italian.png",
             "spaces" :88
@@ -60,7 +60,7 @@
         {
             "id": 1007,
             "title": "Spanish",
-            "price": "£13",
+            "price": "18",
             "location":"Cardiff",
             "image" :"assets/images/spain.png",
             "spaces" :21
@@ -69,7 +69,7 @@
         {
             "id": 1009,
             "title": "Biology",
-            "price": "£13",
+            "price": "25",
             "location":"Dundee",
             "image" :"assets/images/biology.png",
             "spaces" :13
@@ -79,7 +79,7 @@
         {
             "id": 1010,
             "title": "Arabic",
-            "price": "£13",
+            "price": "27",
             "location":"Lancaster",
             "image" :"assets/images/arabic.png",
             "spaces" :14
@@ -89,7 +89,7 @@
         {
             "id": 1011,
             "title": "Science",
-            "price": "£13",
+            "price": "29",
             "location":"Milton Keynes",
             "image" :"assets/images/science.png",
             "spaces" :21
